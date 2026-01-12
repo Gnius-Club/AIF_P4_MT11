@@ -4,19 +4,240 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playbook-P4-TM11</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --background-light: #f4f7f6;
+            --background-dark: #1a1a1a;
+            --text-light: #333;
+            --text-dark: #f4f7f6;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #2c2c2c;
+            --accent-color: #7ed321;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-widgets {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .timer-container {
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .main-container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .activity-list {
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .activity-list ul {
+            list-style: none;
+            padding: 0;
+            position: sticky;
+            top: 20px;
+        }
+
+        .activity-list li {
+            margin-bottom: 10px;
+        }
+
+        .activity-list a {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+
+        .activity-card {
+            background: var(--card-bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode .activity-card {
+            background: var(--card-bg-dark);
+        }
+
+        .objective-box {
+            background: #e1f5fe;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .prompt-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+
+        .dark-mode .prompt-box {
+            background: #3d3d3d;
+            border-color: #555;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .essentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .essential-card {
+            padding: 15px;
+            border-radius: 8px;
+            background: #fff3e0;
+            text-align: center;
+        }
+
+        .materials-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .timeline {
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-dot {
+            width: 25px;
+            height: 25px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 25px;
+            flex-shrink: 0;
+        }
+
+        .roles-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .role-card {
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .role-teacher { background: #e8f5e9; }
+        .role-xolo { background: #fff3e0; }
+        .role-student { background: #e3f2fd; }
+
+        .slide-reference {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .highlight-text {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .collapsible-button {
+            background: #eee;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .collapsible-content {
+            display: none;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #eee;
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
 </head>
 <body>
-
     <header>
-        <h1><span class="book-icon">📋</span> <strong>Playbook Sesión 11 4to Primaria</strong></h1>
+        <h1><span class="book-icon">📋</span> <strong>Playbook: Misión 11 - 4o de Primaria</strong></h1>
         <div class="header-widgets">
             <div class="timer-container">
-                <span id="timer">⏱️ 00:00</span>
-                <button id="startStop">Start</button>
-                <button id="reset">Reset</button>
+                <span id="global-timer">⏱️ 40:00</span>
+                <button id="global-start-stop">Start</button>
+                <button id="global-reset">Reset</button>
             </div>
             <div class="theme-toggle">
                 <i class="fas fa-sun"></i>
@@ -28,7 +249,6 @@
             </div>
         </div>
     </header>
-
     <div class="main-container">
         <aside class="activity-list">
             <h2>Actividades</h2>
@@ -40,375 +260,408 @@
                 <li><a href="#activity-4">4</a></li>
                 <li><a href="#activity-5">5</a></li>
             </ul>
-
-            <div class="sidebar-info">
-                <p>💡 Cada actividad está cuidadosamente diseñada para involucrar a los estudiantes.</p>
-                <p>⏱️ Se proporcionan estimaciones de tiempo para cada actividad para ayudarle a mantener el rumbo.</p>
-            </div>
         </aside>
-
         <main class="content">
             <div class="progress-bar">
                 <div class="progress"></div>
             </div>
-
-            <button id="toggle-dialogues">Mostrar todos los diálogos</button>
-
+            <!-- ACTIVIDAD 0: DE UN VISTAZO -->
             <div class="activity-card" id="activity-0">
-                <h2><span class="book-icon">📝</span> De un Vistazo: Sesión Gnius</h2>
-                <p class="overview-subtitle">Resumen rápido de objetivos, materiales y preparación para el facilitador.</p>
-                <div class="overview-table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 50%;">Objetivos, Tácticas y Entregable</th>
-                                <th style="width: 50%;">Materiales Específicos y Preparación Previa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <strong>Objetivos de Aprendizaje:</strong>
-                                    <ul>
-                                        <li>A.I. Lens (Learn) & GCS: Usar objeto aprendido "ID1". Cutebot reacciona.</li>
-                                        <li>IA: Calidad/cantidad de ejemplos afecta reconocimiento. Probar con pocos vs. muchos.</li>
-                                        <li>Parte de la Currícula de IA cubierta: AIA: Introducción al ML: Impacto de calidad/cantidad de datos.</li>
-                                        <li>Objetivo General de la Sesión: Que los estudiantes utilicen el objeto que previamente enseñaron a la A.I. Lens ("ID1") para que el Cutebot realice una acción específica al detectarlo, y que exploren cómo la calidad y cantidad de ejemplos durante el entrenamiento pueden afectar la fiabilidad del reconocimiento.</li>
-                                    </ul>
-                                    <strong>Secuencia de Clase:</strong>
-                                    <ul>
-                                        <li>⚡ Actividad 1: Saludo de I.A. con todos</li>
-                                        <li>⚡ Actividad 2: I Can Statement + Ejemplificación</li>
-                                        <li>⚡ Actividad 3: AI GYM</li>
-                                        <li>⚡ Actividad 4: Brain Spark</li>
-                                        <li>⚡ Actividad 5: Gnius STORM (Think-Pair-Share)</li>
-                                    </ul>
-                                    <strong>Entregable Clave:</strong>
-                                    <ul>
-                                        <li>Programa en Micro:bit donde el Cutebot reacciona (ej. movimiento, luces) cuando la A.I. Lens detecta el objeto "ID1" previamente entrenado por el estudiante.</li>
-                                        <li>Observaciones y conclusiones (mentales o anotadas) del experimento sobre el impacto de pocos vs. muchos/variados ejemplos de entrenamiento en la fiabilidad del reconocimiento del objeto "ID1".</li>
-                                        <li>Participación en la discusión sobre la importancia de la calidad y cantidad de datos en el entrenamiento de IA.</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <strong>Materiales Específicos:</strong>
-                                    <ul>
-                                        <li>Proyector o pantalla interactiva.</li>
-                                        <li>Conexión a internet estable.</li>
-                                        <li>Chat de "Agente Gnius" (Xolo) activo.</li>
-                                        <li>Presentación de diapositivas (Diapositivas 1-11).</li>
-                                        <li>Robots Cutebot (1 por cada 2 estudiantes, con A.I. Lens conectada).</li>
-                                        <li>Smart A.I. Lens (1 por cada 2 estudiantes, conectada al Cutebot).</li>
-                                        <li>Micro:bits y baterías (1 por cada 2 estudiantes).</li>
-                                        <li>Acceso a MakeCode (<a href="https://makecode.microbit.org/" target="_blank">https://makecode.microbit.org/</a>), con extensión de A.I. Lens.</li>
-                                        <li>El mismo objeto simple que cada estudiante/pareja entrenó como "ID1" en la Sesión 10.</li>
-                                        <li>(Opcional) Papel y lápiz para anotar observaciones del experimento.</li>
-                                    </ul>
-                                    <strong>Preparación Previa para ESTA Sesión:</strong>
-                                    <ol>
-                                        <li><strong>Revisión de Misión (Interna):</strong>
-                                            <ul>
-                                                <li>Verificar conexión a internet.</li>
-                                                <li>Confirmar acceso y funcionamiento de MakeCode y la extensión de A.I. Lens (bloques `Learn an object` e `Image contains learned objects`).</li>
-                                                <li>Asegurar disponibilidad, carga y conexión de Cutebots, A.I. Lens y Micro:bits.</li>
-                                                <li>Tener la presentación de diapositivas lista y en orden.</li>
-                                                <li>Probar el chat "Agente Gnius" (Xolo) para asegurar su operatividad.</li>
-                                                <li>Considerar si se necesita un comando para "borrar" los objetos aprendidos por la A.I. Lens antes del experimento, o si se reinicia el programa/lente.</li>
-                                            </ul>
-                                        </li>
-                                        <li><strong>Familiarización:</strong> Revisar el flujo de la sesión, los diálogos sugeridos y los tiempos de cada actividad.</li>
-                                        <li><strong>Ejemplo Profesor:</strong> Tener listo y funcional tu proyecto de ejemplo (Cutebot reaccionando a un objeto "ID1" que hayas entrenado previamente) para la demostración en la Actividad 2. Considera tener dos versiones del entrenamiento de tu objeto: una con pocos ejemplos y otra con muchos/variados para ilustrar el experimento.</li>
-                                    </ol>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <h2><span class="book-icon">📝</span> De un Vistazo: Comando Central</h2>
+                <p class="overview-subtitle">Todo lo que necesitas para preparar y ejecutar esta misión en minutos.</p>
+                
+                <div class="command-section">
+                    <h3>🎯 Objetivo de Aprendizaje</h3>
+                    <div class="objective-box">
+                        <p><strong>Los estudiantes podrán:</strong> Usar el Micro:Bit, Cutebot y Smart A.I. Lens para reconocer objetos aprendidos y programar reacciones, y comprender el impacto de la calidad y cantidad de datos en la robustez de la IA.</p>
+                    </div>
+                </div>
+                <div class="command-section xolo-prompt">
+                    <h3>🤖 Prompt de Referencia para XOLO (Solo para Maestro)</h3>
+                    <div class="prompt-box">
+                        <div class="prompt-header">
+                            <span class="prompt-label">⚠️ NOTA: XOLO ya conoce el tema de esta misión. Este prompt es SOLO de referencia en caso de emergencia técnica:</span>
+                            <button class="copy-btn" onclick="copyPrompt('main-prompt')">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        <pre id="main-prompt">Quiero entender ¿qué pasa si entreno a la IA con pocos ejemplos vs. muchos ejemplos? Primero explícame por qué la calidad y cantidad de datos cambian lo que la IA reconoce. Luego guíame en un experimento controlado: 1) entrenar ID1 con pocos ejemplos, 2) probar 10 veces y registrar errores, 3) volver a entrenar con muchos ejemplos, 4) comparar resultados. Al final, ayúdame a programar una reacción del Cutebot cuando detecte ID1 (sonido, luz o movimiento).</pre>
+                    </div>
+                </div>
+                <div class="command-section">
+                    <h3>⚡ Puntos Esenciales de la Misión</h3>
+                    <div class="essentials-grid">
+                        <div class="essential-card">
+                            <div class="essential-icon">🎓</div>
+                            <h4>Concepto Clave</h4>
+                            <p>Calidad y cantidad de datos: Es como aprender a leer; si solo ves una letra una vez, podrías confundirla, pero si la ves muchas veces en diferentes libros, la reconocerás siempre.</p>
+                        </div>
+                        <div class="essential-card">
+                            <div class="essential-icon">🔧</div>
+                            <h4>Habilidad Técnica</h4>
+                            <p>Usar la cámara inteligente para que el robot reconozca objetos y reaccione a ellos.</p>
+                        </div>
+                        <div class="essential-card">
+                            <div class="essential-icon">🧪</div>
+                            <h4>Experimentación</h4>
+                            <p>Probar con diferentes cantidades de ejemplos de entrenamiento para entender las limitaciones de reconocimiento.</p>
+                        </div>
+                        <div class="essential-card">
+                            <div class="essential-icon">💬</div>
+                            <h4>Interacción con XOLO</h4>
+                            <p>XOLO ya conoce a cada estudiante y el tema de hoy. Solo abren el chat y comienzan a aprender. Tú guías el timing y motivación.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-section">
+                    <h3>📦 Checklist de Materiales</h3>
+                    <div class="materials-checklist">
+                        <label><input type="checkbox"> Proyector/pantalla + presentación (5 diapositivas)</label>
+                        <label><input type="checkbox"> Internet estable + Gnius Space con XOLO activo</label>
+                        <label><input type="checkbox"> Micro:bit (1 por cada 2 estudiantes)</label>
+<label><input type="checkbox"> Cutebot (1 por cada 2 estudiantes)</label>
+<label><input type="checkbox"> Smart A.I. Lens (1 por cada 2 estudiantes)</label>
+                        <label><input type="checkbox"> Acceso a MakeCode (https://makecode.microbit.org/) con extensión Smart AI Lens instalada</label>
+                        <label><input type="checkbox"> Objetos variados para entrenar la IA (tarjetas, juguetes pequeños)</label>
+                        <label><input type="checkbox"> ⚠️ Esta misión usa programación con BLOQUES en MakeCode</label>
+                        <label><input type="checkbox"> 📋 Para agregar extensión: En MakeCode → Extensiones → Buscar 'AI Lens' → Agregar</label>
+                    </div>
+                    <p class="care-reminder"><strong>🛡️ Cuidado del equipo:</strong> Manipular el robot con cuidado, no tocar el lente de la cámara IA y verificar que los cables estén bien conectados.</p>
+                </div>
+                <div class="command-section">
+                    <h3>🗓️ Secuencia de la Misión (40 min)</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot">1</div>
+                            <div class="timeline-content">
+                                <strong>Intro a la Misión</strong>
+                                <span class="time-badge">2 min</span>
+                                <p>Bienvenida, I Can Statement y contexto de la misión.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">2</div>
+                            <div class="timeline-content">
+                                <strong>A.I. Gym</strong>
+                                <span class="time-badge">8 min</span>
+                                <p>Los estudiantes abren el chat con XOLO y aprenden sobre la calidad y cantidad de datos en el entrenamiento de IA (sin prompt específico).</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">3</div>
+                            <div class="timeline-content">
+                                <strong>Brain Spark</strong>
+                                <span class="time-badge">20 min</span>
+                                <p>Idear, construir y experimentar un programa con XOLO.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">4</div>
+                            <div class="timeline-content">
+                                <strong>Gnius STORM - Compartir</strong>
+                                <span class="time-badge">5 min</span>
+                                <p>Demostración y reflexión en parejas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">5</div>
+                            <div class="timeline-content">
+                                <strong>Entrega de Evidencias</strong>
+                                <span class="time-badge">5 min</span>
+                                <p>Subir capturas a Gnius Space y finalizar misión.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-section">
+                    <h3>🚨 Resolución Rápida de Problemas</h3>
+                    <div class="troubleshooting-list">
+                        <ul>
+                            <li><strong>Si los alumnos no pueden ingresar a Gnius Space:</strong> Activa XOLO SOS en <a href="https://xolo.gnius.club" target="_blank">xolo.gnius.club</a> para continuar la misión sin interrumpir la clase.</li>
+                            <li><strong>Si la cámara no reconoce el objeto:</strong> Revisar la iluminación del salón (evitar luz directa o muy tenue). Intentar entrenar nuevamente con más ejemplos desde distintos ángulos.</li>
+<li><strong>Si el Cutebot no se mueve:</strong> Verificar que la batería esté cargada y el micro:bit bien insertado. Asegurarse de que la extensión PlanetX o AI Lens esté cargada.</li>
+<li><strong>Si hay errores en el código:</strong> Recordar a los estudiantes que XOLO puede ayudar a depurar. Pídeles que copien el error y se lo muestren a XOLO.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
+            <!-- ACTIVIDAD 1: INTRO A LA MISIÓN -->
             <div class="activity-card" id="activity-1">
-                <h2>⚡ Actividad 1: Saludo de I.A. con todos ⏰ 3 minutos</h2>
-                <p>El chatbot da la bienvenida y anticipa que Cutebot actuará según el objeto entrenado y que investigarán cómo mejorar el entrenamiento.</p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 1: Saludo de I.A. con todos ⏰ 0.5 minutos</h3>
-                            <p>(Proyectar Diapositiva 2). Da la bienvenida a los alumnos, recordando el objeto "ID1" entrenado y adelantando la misión de hoy. Pídeles que activen a Xolo.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Hola de nuevo, expertos entrenadores de IA! Ya le enseñamos a nuestra A.I. Lens a reconocer un objeto especial, ¡nuestro 'ID1'! Hoy vamos a dar el siguiente paso: haremos que nuestro Cutebot no solo sepa que está viendo 'ID1', sino que también haga algo divertido o útil cuando lo detecte. Y además, ¡investigaremos un poco más sobre cómo ser mejores profesores para nuestra IA! Antes de empezar, activen a Xolo. Salúdenlo en el chat con su nombre y sus gustos. Por ejemplo: 'Hola Xolo, soy [Nombre] y me gusta que mis robots hagan trucos y aprender cosas nuevas'."</p>
-                            </div>
-                        </div>
+                <div class="activity-header">
+                    <h2>🚀 Actividad 1: Intro a la Misión</h2>
+                    <div class="activity-timer">
+                        <span class="activity-duration">⏱️ 2:00</span>
+                        <button class="timer-start-btn" data-duration="120">Iniciar</button>
                     </div>
-                      <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 2: Saludo de I.A. con todos ⏰ 2.5 minutos</h3>
-                            <p>Monitorea a los alumnos mientras interactúan con Xolo. Asegúrate de que todos reciban una respuesta y resuelve cualquier problema técnico.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Genial! Xolo está listo para esta misión de reacción y experimentación. Si alguien no ha recibido respuesta de Xolo, levante la mano.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="roles-section">
+                    <div class="role-card role-teacher">
+                        <h4>👨‍🏫 Rol del Maestro</h4>
+                        <ul>
+                            <li>Dar la bienvenida con energía.</li>
+                            <li>Pedir a los alumnos que ingresen a Gnius Space.</li>
+                            <li>Proyecta diapositiva 1 con el I Can Statement.</li>
+                            <li>Motiva: "¡Hoy le daremos ojos inteligentes a sus Cutebots!".</li>
+                        </ul>
+                    </div>
+                    <div class="role-card role-xolo">
+                        <h4>🤖 Rol de XOLO</h4>
+                        <ul>
+                            <li>XOLO ya está listo y conoce a cada estudiante.</li>
+                            <li>Sabe que hoy toca aprender sobre Calidad y cantidad de datos en IA.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card role-student">
+                        <h4>👦 Rol del Alumno</h4>
+                        <ul>
+                            <li>Escucha la misión del día.</li>
+                            <li>Loguearse en Gnius Space.</li>
+                            <li>Preparación para trabajar en parejas.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-reference">
+                    <h4>📊 Diapositiva 1: I Can Statement</h4>
+                    <div class="slide-content">
+                        <p><strong>🎯 Hoy seré capaz de:</strong></p>
+                        <p class="highlight-text">🤖 A entrenar la Smart A.I. Lens para que el Cutebot reconozca objetos con precisión.</p>
+                        <p><strong>Aplicación real:</strong> Los sistemas de seguridad en aeropuertos usan esta tecnología para identificar objetos prohibidos con alta precisión.</p>
+                        <p><strong>Tu aliado:</strong> XOLO ya sabe qué vas a aprender hoy. ¡Solo abre el chat y comienza!</p>
                     </div>
                 </div>
             </div>
-
+            <!-- ACTIVIDAD 2: A.I. GYM -->
             <div class="activity-card" id="activity-2">
-                <h2>⚡ Actividad 2: I Can Statement + Ejemplificación ⏰ 5 minutos</h2>
-                <p>Presentar la idea de que Cutebot reaccione al objeto "ID1" y la importancia de la calidad/cantidad de datos de entrenamiento.</p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 1: Introducción y Contextualización ⏰ 2 minutos</h3>
-                            <p>(Proyectar Diapositiva 3). Introduce la idea de que Cutebot realice acciones al ver el objeto "ID1" y plantea la pregunta sobre la calidad del entrenamiento.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">Ya tenemos nuestra lente entrenada para reconocer, por ejemplo, este borrador como 'ID1'. Ahora, ¿qué tal si cuando Cutebot vea el borrador, avanza? O si ve nuestro objeto 'ID1', ¿enciende sus luces de un color especial? Vamos a conectar el reconocimiento de nuestro objeto aprendido con las acciones del Cutebot. Y también vamos a pensar: ¿qué pasa si le enseñamos el objeto solo una o dos veces? ¿Lo reconocerá tan bien como si se lo enseñamos muchas veces y desde diferentes ángulos?</p>
-                            </div>
-                        </div>
+                <div class="activity-header">
+                    <h2>🧠 Actividad 2: A.I. Gym</h2>
+                    <div class="activity-timer">
+                        <span class="activity-duration">⏱️ 8:00</span>
+                        <button class="timer-start-btn" data-duration="480">Iniciar</button>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 2: Presentación del Proyecto del Profesor ⏰ 1 minuto</h3>
-                            <p>Muestra tu proyecto de ejemplo (Cutebot reaccionando al objeto "ID1" previamente enseñado) ya cargado y funcionando. Esta es una demostración en vivo.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">Miren este ejemplo: (Muestra el Cutebot. Al presentarle el objeto "ID1" que entrenaste, el robot realiza una acción como moverse o encender LEDs). Mi 'idea (vibe)' fue que Cutebot hiciera una fiesta cuando viera mi objeto especial.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="roles-section">
+                    <div class="role-card role-teacher">
+                        <h4>👨‍🏫 Rol del Maestro</h4>
+                        <ul>
+                            <li>Proyecta diapositiva 2.</li>
+                            <li>Indica: "Abran el chat con XOLO y salúdenlo. Él ya sabe qué les va a enseñar hoy."</li>
+                            <li>Circula para asegurar que todos interactúan con XOLO.</li>
+                            <li>Si alguien tiene dudas, recuérdale: "Pregúntale a XOLO, él te puede explicar de otra forma".</li>
+                        </ul>
                     </div>
-                     <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 3: "I Can Statement" y Conexión ⏰ 2 minutos</h3>
-                            <p>(Proyectar Diapositiva 4). Presenta formalmente el 'I Can Statement'.</p>
+                    <div class="role-card role-xolo">
+                        <h4>🤖 Rol de XOLO</h4>
+                        <p class="xolo-status">✅ XOLO ACTIVO</p>
+                        <ul>
+                            <li>Reconoce al estudiante y sus preferencias de aprendizaje.</li>
+                            <li>Explica cómo la cámara reconoce patrones según los ejemplos que recibe.</li>
+                            <li>Introduce el concepto de robustez y por qué más datos ayudan a evitar errores.</li>
+                            <li>Responde dudas sobre los conceptos.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card role-student">
+                        <h4>👦 Rol del Alumno</h4>
+                        <ul>
+                            <li>Abrir el chat con XOLO y saludarlo.</li>
+                            <li>Aprender a usar la Smart A.I. Lens para entrenar el reconocimiento de un objeto.</li>
+                            <li>Aprender sobre cómo la cantidad de ejemplos mejora la precisión de la IA.</li>
+                            <li>Despejar todas sus dudas preguntando a XOLO.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-reference">
+                    <h4>📊 Diapositiva 2: A.I. GYM</h4>
+                    <div class="slide-content">
+                        <p><strong>💬 Abre el chat con XOLO y salúdalo:</strong></p>
+                        <div class="prompt-box">
+                            <pre>"¡Hola XOLO! Estoy listo para aprender."</pre>
                         </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">Hoy vamos a programar a Cutebot para que reaccione a nuestro objeto 'ID1'. Al final de la clase, podrán decir: '<strong>Yo puedo hacer que mi Cutebot realice una acción específica cuando la A.I. Lens reconoce el objeto que yo le enseñé, y entiendo que darle más y mejores ejemplos a la IA ayuda a que aprenda mejor.</strong>' ¡A programar reacciones y a investigar como científicos!</p>
-                            </div>
-                        </div>
+                        <p class="highlight-text" style="margin-top: 1rem;">✨ XOLO ya sabe quién eres y qué tema toca hoy. ¡Solo empieza a conversar!</p>
+                        <p class="highlight-text">🎯 Objetivo: Aprender a usar la Smart A.I. Lens para reconocer objetos y entender la importancia de los datos.</p>
+                    </div>
+                </div>
+                
+                <div class="optional-script">
+                    <button class="collapsible-button">📖 Ver guion detallado (opcional)</button>
+                    <div class="collapsible-content">
+                        <p class="dialogue assistant">¡Hola a todos! Ahora vamos a descubrir cómo aprenden las máquinas. Por favor, abran su chat con XOLO y salúdenlo. XOLO ya los conoce y sabe exactamente qué les va a enseñar hoy sobre cómo entrenar su cámara inteligente. No necesitan escribir un prompt especial, solo empiecen a platicar con él. Él les explicará por qué a veces la IA se confunde y cómo podemos ayudarla dándole mejores ejemplos. Aprovechen para preguntarle todo sobre cómo funciona su Smart A.I. Lens. ¡Adelante!</p>
                     </div>
                 </div>
             </div>
-
+            <!-- ACTIVIDAD 3: BRAIN SPARK -->
             <div class="activity-card" id="activity-3">
-                <h2>⚡ Actividad 3: AI GYM ⏰ 7 minutos</h2>
-                <p>Introducir cómo Cutebot reacciona a "ID1" y el concepto del impacto de la calidad/cantidad de datos de entrenamiento.</p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 1: Instrucción Inicial y Contextualización de la IA ⏰ 1 minuto</h3>
-                            <p>(Proyectar Diapositiva 5). Presenta el A.I. GYM y da la instrucción para que los alumnos pidan la información a Xolo.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Genios, al A.I. GYM! 🧠💪 Xolo nos explicará cómo hacer que Cutebot reaccione a nuestro 'ID1' y, muy importante, cómo la cantidad y calidad de los ejemplos que le damos a la IA afectan si aprende bien. Escriban en el chat: 'Mi perfil es [escribe aquí tus gustos/intereses] y quiero aprender cómo Cutebot reacciona a mi objeto ID1 y sobre la importancia de los datos de entrenamiento'.</p>
-                            </div>
-                        </div>
+                <div class="activity-header">
+                    <h2>💡 Actividad 3: Brain Spark</h2>
+                    <div class="activity-timer">
+                        <span class="activity-duration">⏱️ 20:00</span>
+                        <button class="timer-start-btn" data-duration="1200">Iniciar</button>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 2: Interacción Guiada y Ejemplo de Plan (GCS) ⏰ 6 minutos</h3>
-                            <p>(Proyectar Diapositivas 6 y 7). Monitorea a los alumnos. Xolo les explicará brevemente cómo usar `Image contains learned objects: ID1` para las acciones del Cutebot y luego se centrará en la importancia de la cantidad y calidad/variedad de los datos de entrenamiento.</p>
+                </div>
+                <div class="roles-section">
+                    <div class="role-card role-teacher">
+                        <h4>👨‍🏫 Rol del Maestro</h4>
+                        <ul>
+                            <li>Proyecta la diapositiva 3.</li>
+                            <li>Indica: "Pidan a XOLO que los ayude a idear un proyecto. Cuando tengan su GCS, pásenlo a bloques en MakeCode, prueben en el simulador y luego con el hardware real".</li>
+                            <li>Entrega por parejas los Cutebots y Smart A.I. Lenses conforme los alumnos prueben su GCS en el simulador.</li>
+                            <li>Si hay errores, recuerda: "Pregúntenle a XOLO, él los ayuda a depurar".</li>
+                        </ul>
+                    </div>
+                    <div class="role-card role-xolo">
+                        <h4>🤖 Rol de XOLO</h4>
+                        <p class="xolo-status">✅ XOLO ACTIVO</p>
+                        <ul>
+                            <li>Ayuda a desarrollar una idea y un VIBE que aplique el reconocimiento de objetos para una tarea específica.</li>
+                            <li>Entrega el GCS de la idea del genio.</li>
+                            <li>Resuelve errores de sintaxis o lógica.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card role-student">
+                        <h4>👦 Rol del Alumno</h4>
+                        <ul>
+                            <li>Trabajar con XOLO una idea y un VIBE para usar el Cutebot como un robot clasificador.</li>
+                            <li>Traducir el GCS de XOLO a bloques en MakeCode.</li>
+                            <li>Depurar su programa con XOLO si hay errores.</li>
+                            <li>Conectar la Smart A.I. Lens al Cutebot y probar el reconocimiento.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-reference">
+                    <h4>📊 Diapositiva 3: Brain Spark</h4>
+                    <div class="slide-content">
+                        <p><strong>1. 💬 Pide a XOLO que te ayude a crear:</strong></p>
+                        <div class="prompt-box">
+                            <pre>"Xolo, quiero inventar un proyecto donde el robot sea un “clasificador” simple: cuando vea el objeto aprendido hace algo especial. Dame 3 ideas (robot vigilante, robot ayudante, robot juego). Luego ayúdame a elegir VIBE y convertirlo en un GCS que incluya entrenamiento, reconocimiento y reacción. Si puedes, incluye una idea para hacerlo más robusto cuando la IA dude."</pre>
                         </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">(Mientras los alumnos interactúan con Xolo) ¡Excelente! Xolo les está mostrando cómo usar la condición `Image contains learned objects: ID1` para que Cutebot reaccione. Y ahora, un punto clave para ser buenos entrenadores de IA: Xolo les explicará por qué es tan importante la cantidad y la variedad de los ejemplos que le damos a la IA para que aprenda bien. ¡Es como enseñar, mientras más y mejores ejemplos, mejor se aprende!</p>
-                                <p class="dialogue assistant">Para que vean un ejemplo de tu plan (el GCS) donde Cutebot reacciona a ID1, Xolo podría presentarles esto:</p>
-                                <pre class="dialogue assistant" style="color: #d32f2f;">
-// (Este GCS asume que ya existe una forma de entrenar ID1, como con un botón)
-POR SIEMPRE:
-    SI (Image contains learned objects: ID1):
-        cutebot_avanzar(60)
-        cutebot_todos_los_led(AZUL)
-        ESPERAR 1 segundo
-        cutebot_detener()
-        cutebot_apagar_leds()
-    SINO:
-        // No hacer nada o una acción por defecto
-    FIN SI
-    ESPERAR 0.1 segundos
-                                </pre>
-                                <p class="dialogue assistant">Si tienen dudas, ¡pregúntenle a Xolo! Por ejemplo: <br>
-                                <strong>* 'Xolo, ¿si le enseño mi borrador sucio, reconocerá uno limpio?'</strong><br>
-                                <strong>* '¿Cómo saben los ingenieros de IA cuántos ejemplos son suficientes?'</strong> (Relacionar con sus gustos) <br>
-                                <strong>* '¿Mostrarle el objeto muy rápido cuenta como un buen ejemplo?'</strong></p>
-                            </div>
-                        </div>
+                        <p style="margin-top: 1.5rem;"><strong>2. 🔬 Experimenta y descubre con tu programa:</strong></p>
+                        <ul>
+                            <li>¿El Cutebot reacciona inmediatamente al ver el objeto?</li>
+                            <li>¿Qué pasa si inclinas el objeto o cambias la luz del salón?</li>
+                            <li>¿Funciona igual de bien si el objeto está muy lejos que si está cerca?</li>
+                            <li>¿Cómo influyó la cantidad de fotos que tomaste en que el robot no cometiera errores?</li>
+                            <li>Si el robot duda al reconocer, ¿qué podrías cambiar en tu código para que sea más robusto?</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="optional-script">
+                    <button class="collapsible-button">📖 Ver guion detallado (opcional)</button>
+                    <div class="collapsible-content">
+                        <p class="dialogue assistant">¡Es hora de crear, genios! Ahora que saben cómo entrenar a XOLO, vamos a darle una misión real a sus robots. El flujo es simple: ideen con XOLO, elijan un VIBE, obtengan su GCS y pásenlo a MakeCode. Por ejemplo, podrían crear un 'Robot Vigilante' que encienda luces rojas si ve un intruso, o un 'Robot Ayudante' que les traiga un objeto específico. No olviden probar sus ideas primero en el simulador y luego con el hardware real. Si tienen errores o dudas, pregúntenle a XOLO, él los ayudará a depurar. Al terminar, asegúrense de cuidar mucho su equipo. ¡A innovar!</p>
+                    </div>
+                </div>
+                <div class="challenge-prompt">
+                    <h4>🚀 Prompt de Desafío (para quienes terminen rápido)</h4>
+                    <div class="prompt-box">
+                        <p><strong>Si ya experimentaste con todo, pregunta a XOLO:</strong></p>
+                        <p class="challenge-text">"Ya probé con el reconocimiento básico. ¿Puedes enseñarme cómo hacer que mi Cutebot reconozca dos objetos diferentes y haga una acción distinta para cada uno?"</p>
                     </div>
                 </div>
             </div>
-
+            <!-- ACTIVIDAD 4: GNIUS STORM - COMPARTIR -->
             <div class="activity-card" id="activity-4">
-                 <h2>⚡ Actividad 4: Brain Spark ⏰ 20 minutos</h2>
-                <p>Re-entrenamiento (opcional), programación de la reacción al objeto "ID1" y experimento con pocos vs. muchos ejemplos.</p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 1: Introducción al Brain Spark y Preparación del Experimento ⏰ 2 minutos</h3>
-                            <p>(Proyectar Diapositiva 8). Presenta la actividad, explicando que programarán la reacción y luego experimentarán con el entrenamiento. Indica que la 'idea (vibe)' del objeto y su reacción son individuales, pero deberán coordinarse en pareja para usar el material compartido (Cutebot, A.I. Lens, Micro:bit) y realizar los turnos de programación y las rondas de entrenamiento para el objeto de cada uno.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Tiempo, científicos y programadores! Ahora al Brain Spark. Primero, cada uno programará una reacción divertida para cuando Cutebot vea su objeto 'ID1' individual. Luego, haremos un experimento para ver cómo la cantidad de ejemplos afecta qué tan bien aprende la IA. Aunque cada uno tendrá su propia 'idea (vibe)' de objeto y reacción, recuerden que comparten el material en pareja. Pónganse de acuerdo para los turnos de programación y, especialmente, para las rondas de entrenamiento del objeto de cada uno.</p>
-                            </div>
-                        </div>
+                <div class="activity-header">
+                    <h2>⚡ Actividad 4: Gnius STORM - Compartir y Reflexionar</h2>
+                    <div class="activity-timer">
+                        <span class="activity-duration">⏱️ 5:00</span>
+                        <button class="timer-start-btn" data-duration="300">Iniciar</button>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 2: Ideación (La "idea (vibe)" de Reacción a ID1) y Planificación con IA ⏰ 4 minutos</h3>
-                            <p>(Proyectar Diapositiva 9). Anima a los alumnos a definir una reacción para su Cutebot al ver "ID1". Guíalos para obtener 'tu plan (el GCS)' de Xolo, incluyendo la lógica para entrenar ID1 (similar a Sesión 10).</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                 <p class="dialogue assistant">¿Qué quieren que haga su Cutebot cuando vea el objeto 'ID1' que le enseñaron? Quizás: 'Quiero que cuando Cutebot vea mi objeto 'ID1', dé una vuelta y encienda sus luces como una fiesta.' Piensen en su 'idea (vibe)' individual. Luego, díganle a Xolo: 'Mi idea (vibe) es que Cutebot haga una fiesta cuando vea ID1. Necesito tu plan (el GCS) que incluya cómo entrenar ID1 (por ejemplo, con el botón A) y cómo reaccionar cuando lo vea (por ejemplo, en un POR SIEMPRE o con el botón B)'.</p>
-                                <p class="dialogue assistant">Xolo podría generar 'tu plan (el GCS)' así (combinando entrenamiento y reacción):</p>
-                                <pre class="dialogue assistant" style="color: #d32f2f;">
-AL INICIO:
-    Initialize AI-Lens
-    // (Si es necesario, un bloque para Clear learned objects aquí o activado por otro botón)
-    mostrar texto "A entrenar/reaccionar!"
-
-CUANDO SE PRESIONE EL BOTÓN A: // Para ENTRENAR
-    Learn an object with: ID1
-    mostrar texto "Aprendi ID1!"
-    mostrar icono CORAZON
-
-// Para REACCIONAR (puede ser POR SIEMPRE o con Botón B)
-POR SIEMPRE: 
-    SI (Image contains learned objects: ID1):
-        cutebot_girar_derecha(70)
-        ESPERAR 1.5 segundos // Ajustar para una vuelta
-        cutebot_detener()
-        // Simular luces de fiesta
-        cutebot_led_izquierdo(ROJO)
-        cutebot_led_derecho(AZUL)
-        ESPERAR 0.3 segundos
-        // (más luces si quieren)
-        cutebot_apagar_leds()
-    SINO:
-        cutebot_detener() 
-        cutebot_apagar_leds()
-    FIN SI
-    ESPERAR 0.1 segundos
-                                </pre>
-                            </div>
-                        </div>
+                </div>
+                <div class="roles-section">
+                    <div class="role-card role-teacher">
+                        <h4>👨‍🏫 Rol del Maestro</h4>
+                        <ul>
+                            <li>Organiza las parejas para compartir.</li>
+                            <li>Gestiona los tiempos: 2 min demo + 2 min reflexión + 1 min cierre.</li>
+                            <li>Facilita retroalimentación constructiva.</li>
+                            <li>Cierra con reflexión sobre aplicaciones reales.</li>
+                        </ul>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 3: Implementación y Experimento (Pocos vs. Muchos Ejemplos) ⏰ 13 minutos</h3>
-                            <p>Da tiempo a los alumnos para implementar el código. Guíalos en el experimento: Ronda 1 (entrenar ID1 con 1-2 ejemplos, probar reacción) y Ronda 2 (borrar si es posible, re-entrenar ID1 con 10-15+ ejemplos variados, probar reacción). Observan y comparan fiabilidad.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡A programar y experimentar! Tomen 'tu plan (el GCS)' y constrúyanlo. Ahora, el experimento:
-                                **Ronda 1 (Pocos ejemplos):** "Enseñen" su objeto 'ID1' a la lente presionando el botón de aprendizaje solo 1 o 2 veces, desde el mismo ángulo. Prueben si Cutebot reacciona. ¿Lo reconoce bien?
-                                **Ronda 2 (Muchos y variados ejemplos):** (Si es posible, "borren" lo aprendido antes o reinicien). Ahora, "enseñen" el mismo objeto 'ID1' unas 10-15 veces (o más), mostrándolo desde diferentes ángulos, un poco más cerca/lejos, con diferentes luces (sin exagerar). Prueben de nuevo. ¿Lo reconoce mejor ahora? ¿Desde más ángulos? Recuerden turnarse para entrenar y probar con el objeto de cada uno.</p>
-                            </div>
-                        </div>
+                    <div class="role-card role-xolo">
+                        <h4>🤖 Rol de XOLO</h4>
+                        <p class="xolo-status">⏸️ XOLO EN ESPERA</p>
+                        <ul>
+                            <li>Disponible solo si hay dudas finales urgentes.</li>
+                        </ul>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 4: Mejoras y Desafíos ⏰ 1 minutos</h3>
-                            <p>Ofrece desafíos adicionales.</p>
+                    <div class="role-card role-student">
+                        <h4>👦 Rol del Alumno</h4>
+                        <ul>
+                            <li>Demuestra su programa funcionando a otra pareja.</li>
+                            <li>Explica qué objetos reconoce bien su robot y cómo reacciona.</li>
+                            <li>Comparte un descubrimiento interesante.</li>
+                            <li>Da retroalimentación positiva al compañero.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-reference">
+                    <h4>📊 Diapositiva 4: Think-Pair-Share</h4>
+                    <div class="slide-content tps-structure">
+                        <div class="tps-phase">
+                            <h4>🤔 THINK (30 seg)</h4>
+                            <p>Reflexión individual: ¿Qué tipos de objetos reconoció mejor tu Cutebot? ¿Qué te sorprendió del entrenamiento?</p>
                         </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¿Su Cutebot reacciona bien a su objeto entrenado? ¡Genial! Si terminaron el experimento, ¿pueden hacer que la "fiesta" de luces sea más elaborada? ¿O que Cutebot diga algo en la pantalla del Micro:bit cuando ve el objeto? ¡Consulten con Xolo!</p>
-                            </div>
+                        <div class="tps-phase">
+                            <h4>👥 PAIR (2 min)</h4>
+                            <p>Con otra pareja: Demuestren su programa y expliquen su experiencia</p>
+                            <p class="highlight-text">Frase guía: "Mi Cutebot reconoció mejor los objetos con colores brillantes. Me sorprendió que con pocas fotos se confundía más."</p>
+                        </div>
+                        <div class="tps-phase">
+                            <h4>💬 SHARE (2 min)</h4>
+                            <p>Retroalimentación mutua y cierre del maestro.</p>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <!-- ACTIVIDAD 5: ENTREGA DE EVIDENCIAS -->
             <div class="activity-card" id="activity-5">
-                <h2>⚡ Actividad 5: Gnius STORM ⏰ 5 minutos</h2>
-                <p>Los alumnos muestran cómo Cutebot reacciona a "ID1" y comparten los resultados de su experimento sobre datos de entrenamiento.</p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 1: Gnius STORM (Think - Individual) ⏰ 0.5 minutos</h3>
-                            <p>(Proyectar Diapositiva 10). Presenta la actividad.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Tiempo, científicos de IA! Han programado reacciones y experimentado con el entrenamiento. Ahora, en nuestro Gnius STORM, compartiremos los resultados.</p>
-                            </div>
-                        </div>
+                <div class="activity-header">
+                    <h2>✅ Actividad 5: Entrega de Evidencias</h2>
+                    <div class="activity-timer">
+                        <span class="activity-duration">⏱️ 5:00</span>
+                        <button class="timer-start-btn" data-duration="300">Iniciar</button>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 2: Gnius STORM (Pair - Parejas) ⏰ 0.5 minutos</h3>
-                            <p>Reflexión individual.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">Antes de mostrarlo, piensen 30 segundos: <strong>¿Cómo reacciona su Cutebot a su objeto "ID1"? ¿Notaron alguna diferencia en cómo la lente reconocía el objeto después de enseñarle con pocos ejemplos versus con muchos y variados? ¿Por qué creen que pasó eso?</strong></p>
-                            </div>
-                        </div>
+                </div>
+                <div class="roles-section">
+                    <div class="role-card role-teacher">
+                        <h4>👨‍🏫 Rol del Maestro</h4>
+                        <ul>
+                            <li>Proyecta diapositiva 5 con las instrucciones.</li>
+                            <li>Guía a los estudiantes para tomar las capturas.</li>
+                            <li>Asegura que todos suban sus evidencias a Gnius Space.</li>
+                            <li>Felicita al grupo por completar la misión.</li>
+                        </ul>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 3: Gnius STORM (Share - Retroalimentación) ⏰ 1.5 minutos</h3>
-                            <p>Indica a los alumnos que se junten en parejas, muestren la reacción de su Cutebot a "ID1" y compartan brevemente los resultados de su experimento.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Muy bien! Con su compañero, muestren cómo su Cutebot reacciona a su objeto "ID1". Luego, cuenten brevemente: <strong>'Cuando entrené con pocos ejemplos, la lente [resultado]. Cuando entrené con muchos y variados, la lente [resultado]. Creo que esto pasó porque [su conclusión].'</strong> El compañero debe observar y escuchar.</p>
-                            </div>
-                        </div>
+                    <div class="role-card role-xolo">
+                        <h4>🤖 Rol de XOLO</h4>
+                        <p class="xolo-status">⭕ XOLO FINALIZADO</p>
+                        <ul>
+                            <li>La interacción con XOLO ha terminado para esta misión.</li>
+                        </ul>
                     </div>
-                    <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 4: Gnius STORM (Reflexión Final) ⏰ 1.5 minutos</h3>
-                            <p>Guía la retroalimentación.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">Ahora, la retroalimentación. Después de ver la demostración y escuchar las conclusiones de su compañero, díganle: <br>
-                                <strong>* 'Me gustó cómo tu Cutebot [reacción específica] al ver tu objeto.'</strong><br>
-                                <strong>* 'Es interesante tu conclusión sobre por qué [pocos/muchos] ejemplos funcionaron [mejor/peor].'</strong><br>
-                                <strong>* 'Para la próxima, podrías probar entrenar el objeto también [sugerencia, ej. con un fondo diferente]...'</strong></p>
-                            </div>
-                        </div>
+                    <div class="role-card role-student">
+                        <h4>👦 Rol del Alumno</h4>
+                        <ul>
+                            <li>Tomar screenshot de su código en MakeCode.</li>
+                            <li>Tomar screenshot de su conversación con XOLO.</li>
+                            <li>Subir ambas evidencias a Gnius Space.</li>
+                            <li>Dar click en "Finalizar Misión".</li>
+                        </ul>
                     </div>
-                     <div class="step-card">
-                        <div class="step-content">
-                            <h3>Paso 5: Gnius STORM (Reflexión Final) ⏰ 1 minuto</h3>
-                            <p>(Proyectar Diapositiva 11). Cierra la sesión reforzando la importancia de la calidad y cantidad de datos en el entrenamiento de IA y cómo esto lleva a modelos más robustos.</p>
-                        </div>
-                        <div class="collapsible">
-                            <button type="button" class="collapsible-button">Diálogo Sugerido</button>
-                            <div class="collapsible-content">
-                                <p class="dialogue assistant">¡Excelente experimentación científica! Han visto en la práctica que la calidad y cantidad de los datos de entrenamiento son cruciales para que la IA aprenda bien. Darle más ejemplos y más variados ayuda a la IA a ser más robusta, es decir, a reconocer el objeto en más situaciones. ¡Esto es algo que los ingenieros de IA tienen muy en cuenta todos los días cuando construyen modelos inteligentes! Hoy lograron decir: '<strong>Yo puedo hacer que mi Cutebot realice una acción específica cuando la A.I. Lens reconoce el objeto que yo le enseñé, y entiendo que darle más y mejores ejemplos a la IA ayuda a que aprenda mejor.</strong>' ¡Son unos verdaderos científicos de datos para robots!</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="slide-reference">
+                    <h4>📊 Diapositiva 5: ¡Misión Cumplida!</h4>
+                    <div class="slide-content">
+                        <p><strong>📸 Para terminar, sube tus evidencias a Gnius Space:</strong></p>
+                        <ol>
+                            <li>Una captura de pantalla de tu programa final en <strong>MakeCode</strong>.</li>
+                            <li>Una captura de pantalla de tu conversación con <strong>XOLO</strong> donde te dio tu GCS.</li>
+                        </ol>
+                        <p class="highlight-text" style="margin-top: 1rem;">¡No olvides dar click en el botón <strong>"Finalizar Misión"</strong> cuando termines!</p>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
-</html>
+</html></html>
